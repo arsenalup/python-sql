@@ -1,5 +1,5 @@
 from mongoengine import connect, Document, StringField, IntField, FloatField, EmbeddedDocument, ListField, EmbeddedDocumentField
-
+"""mongod.exe --dbpath d:\path\mongodb\data"""
 connect('students')
 
 SEX_CHOICES = (
@@ -19,7 +19,8 @@ class students(Document):
     grade= ListField(EmbeddedDocumentField(Grade))
 
     meta = {
-        'collection': 'students'
+        'collection': 'students',
+        'ordering':'[-age]'
     }
 
 class TestMongoEngine(object):
@@ -44,8 +45,8 @@ class TestMongoEngine(object):
         return stu_obj
 
     def get_one(sele):
-        return students.objects.first()
-
+        # return students.objects.first()
+        return students.objects.get(age=18)[1]
     def get_more(self):
         ''' 查询多条数据 '''
         # return Student.objects
